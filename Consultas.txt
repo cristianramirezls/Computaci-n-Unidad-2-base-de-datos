@@ -1,0 +1,148 @@
+/*consulta 1*/
+SELECT * FROM contenido;
+
+SELECT id_contenido, titulo, sinopsis, palabras_clave FROM contenido;
+
+/*consulta 2*/
+SELECT * FROM contenido where titulo='Avatar';
+
+/*consulta 3*/
+SELECT titulo 
+FROM contenido 
+ORDER BY palabras_clave ASC;
+
+/*consulta 4*/
+SELECT genero, COUNT(*) AS cantidad 
+FROM contenido 
+GROUP BY genero;
+
+/*consulta 5*/
+SELECT id_contenido, titulo 
+FROM contenido 
+WHERE idioma = 'Español';
+
+/*consulta 6*/
+SELECT titulo, fecha_publicacion 
+FROM contenido 
+WHERE fecha_publicacion BETWEEN '2000-01-01' AND '2020-12-31';
+
+/*consulta 7*/
+/*Duración promedio entre la fecha de creación y publicación de los contenidos:*/
+SELECT AVG(DATEDIFF(fecha_publicacion, fecha_creacion)) AS promedio_dias 
+FROM contenido;
+
+/*consulta 8*/
+SELECT titulo, palabras_clave 
+FROM contenido 
+WHERE palabras_clave LIKE '%Amistad%';
+
+/*consulta 9*/
+SELECT titulo, fecha_publicacion 
+FROM contenido 
+WHERE formato = 'HD' AND YEAR(fecha_publicacion) > 2010;
+
+/*consulta 10*/
+/*Número de contenidos por estado actual:*/
+SELECT estado_actual_id, COUNT(*) AS cantidad 
+FROM contenido 
+GROUP BY estado_actual_id;
+
+/*consulta 11*/
+SELECT estadisticascontenido_id_contenido, puntuacion_promedio
+FROM estadisticascontenido
+WHERE puntuacion_promedio > 4;
+
+/*consulta 12*/
+SELECT estadisticascontenido_id_contenido, numero_visualizaciones
+FROM estadisticascontenido
+ORDER BY numero_visualizaciones DESC
+LIMIT 5;
+
+/*consulta 13*/
+SELECT estadisticascontenido_id_contenido, taza_finalizacion
+FROM estadisticascontenido
+WHERE taza_finalizacion < 80;
+
+/*consulta 14*/
+SELECT AVG(numero_visualizaciones) AS promedio_visualizaciones
+FROM estadisticascontenido;
+
+/*consulta 15*/
+/*Te da un recuento de todas las notificaciones registradas.*/
+SELECT COUNT(*) AS total_notificaciones
+FROM notificaciones;
+
+/*consulta 16*/
+SELECT id_notificacion, mensaje, fecha_notificacion
+FROM notificaciones
+ORDER BY fecha_notificacion DESC;
+
+/*consulta 17*/
+/*Cuenta cuántas notificaciones se han enviado para cada contenido, ordenadas de mayor a menor.*/
+SELECT notificaciones_contenido, COUNT(*) AS total_por_contenido
+FROM notificaciones
+GROUP BY notificaciones_contenido
+ORDER BY total_por_contenido DESC;
+
+/*consulta 18*/
+SELECT id_notificacion, mensaje, fecha_notificacion
+FROM notificaciones
+WHERE fecha_notificacion BETWEEN '2021-02-01' AND '2021-03-01';
+
+/*consulta 19*/
+SELECT *
+FROM notificaciones
+WHERE notificaciones_contenido = 2;
+
+/*consulta 20*/
+SELECT id_notificacion, mensaje, fecha_notificacion
+FROM notificaciones
+WHERE fecha_notificacion BETWEEN '2022-01-01' AND '2024-01-01';
+
+/*consulta 21*/
+SELECT nombre_usuario, contraseña
+from usuario;
+
+/*consulta 22*/
+SELECT * FROM usuario where nombre_usuario='CyberWolf' ;
+
+/*consulta 23*/
+SELECT * FROM usuario
+where id_usuario BETWEEN '50' AND '90';
+
+/*consulta 24*/
+SELECT * FROM tablaestadoproduccion
+where nombre_estado = 'publicado'
+
+/*consulta 25*/
+SELECT nombre_estado,COUNT(*) AS cantidad 
+ from tablaestadoproduccion
+ where nombre_estado ='Completado'
+ group by nombre_estado;
+
+/*consulta 26*/
+Select * from  historialcambios
+where campo_modificado ='red_conectada';
+
+/*consulta 27*/
+select * from equipoproduccion
+where Rol = 'Director y Guionista';
+
+/*consulta 28*/
+select Rol, count(*) AS cantidad 
+from equipoproduccion
+group by Rol;
+
+/*consulta 29*/
+/* mayor número de visualizaciones de la tabla */
+select Nombre
+ from equipoproduccion 
+ order by nombre desc 
+ limit 3;
+
+/*consulta 30*/
+/*La instrucción JOIN en SQL 
+se utiliza para combinar datos de dos o más tablas relacionales en una sola consulta. */
+select contenido.titulo,equipoproduccion.Nombre,equipoproduccion.Rol
+from equipoproduccion
+inner join contenido on contenido.id_contenido = equipoproduccion.id_equipo;
